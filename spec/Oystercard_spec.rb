@@ -16,35 +16,39 @@ describe Oystercard do
     expect{ subject.top_up (1) }.to raise_error "Max balance reached!"
   end
 
-   it 'deducts an amount from the balance' do
-     subject.top_up(50)
-     expect{ subject.deduct 1 }.to change {subject.balance}.by -1 
-   end
-
    describe "#touch_in" do
+   let(:station) {double :station}
      it 'should be able to touch in' do
      subject.top_up(5)
-     subject.touch_in
-     expect(subject.in_journey?).to eq true
+     subject.touch_in(station)
+     expect(subject).to be_in_journey
      end
 
      it "raise error if card has insufficient funds" do
-      expect{subject.touch_in}.to raise_error "Insufficient funds to touch in"
+      expect{subject.touch_in(station)}.to raise_error "Insufficient funds to touch in"
      end
+
+     it "logs entry station history" do
+      subject.top_up(5)
+      subject.touch_in(station)
+      expect(subject).to have_attributes(:entry_station => station)
+     end
+
     end
 
      
      describe "#touch_out" do
+     let(:station) {double :station}
       it 'should be able to touch out' do
       subject.top_up(5)
-      subject.touch_in
+      subject.touch_in(station)
       subject.touch_out
-      expect(subject.in_journey?).to eq false
+      expect(subject).not_to be_in_journey
       end
 
       it 'deduct from the balance when touch out' do
         subject.top_up(5)
-        subject.touch_in
+        subject.touch_in(station)
         expect{ subject.touch_out }.to change {subject.balance}.by (-1)
       end
 
