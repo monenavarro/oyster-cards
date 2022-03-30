@@ -23,19 +23,33 @@ describe Oystercard do
 
    describe "#touch_in" do
      it 'should be able to touch in' do
+     subject.top_up(5)
      subject.touch_in
      expect(subject.in_journey?).to eq true
+     end
+
+     it "raise error if card has insufficient funds" do
+      expect{subject.touch_in}.to raise_error "Insufficient funds to touch in"
      end
     end
 
      
      describe "#touch_out" do
       it 'should be able to touch out' do
+      subject.top_up(5)
       subject.touch_in
       subject.touch_out
       expect(subject.in_journey?).to eq false
       end
+
+      it 'deduct from the balance when touch out' do
+        subject.top_up(5)
+        subject.touch_in
+        expect{ subject.touch_out }.to change {subject.balance}.by (-1)
+      end
+
     end
+
      
       describe "#in_a_journey" do
       it 'is initially not in a journey' do
