@@ -17,11 +17,6 @@ class Journey
   end
 
   def fare 
-    p @entry_station
-    if @entry_station != nil 
-      PENALTY_FARE
-    else
-      Oystercard::MINIMUM_FARE
-    end
+    @entry_station != nil ? PENALTY_FARE : Oystercard::MINIMUM_FARE
   end
 end
