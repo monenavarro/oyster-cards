@@ -1,4 +1,5 @@
-require './lib/Journey.rb'
+require './lib/Journey'
+require './lib/Oystercard'
 
 describe Journey do
   let(:station) { double "entry_station"}
@@ -16,6 +17,17 @@ describe Journey do
     it 'lets you finish your journey at a station' do
       subject.finish_journey(exit_station)
       expect(subject.exit_station).to eq exit_station
+    end
+
+    it 'calculates a fare' do 
+      journey = Journey.new(station)
+      journey.finish_journey(exit_station)
+      expect(journey.fare).to eq Oystercard::MINIMUM_FARE
+    end
+
+    it 'calculates a penalty' do
+      journey = Journey.new(station)
+      expect(journey.fare).to eq Journey::PENALTY_FARE
     end
   end
 end

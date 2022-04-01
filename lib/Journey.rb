@@ -1,6 +1,10 @@
+require './lib/Oystercard'
+
 class Journey
 
-  attr_reader :entry_station, :exit_station
+  PENALTY_FARE = 6
+
+  attr_reader :entry_station, :exit_station, :PENALTY_FARE
 
   def initialize(entry_station = nil)
     @entry_station = entry_station
@@ -10,5 +14,14 @@ class Journey
   def finish_journey(station)
     @exit_station = station
     @entry_station = nil
+  end
+
+  def fare 
+    p @entry_station
+    if @entry_station != nil 
+      PENALTY_FARE
+    else
+      Oystercard::MINIMUM_FARE
+    end
   end
 end
