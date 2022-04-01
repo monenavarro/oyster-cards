@@ -67,16 +67,18 @@ describe Oystercard do
     end
 
       describe '#list_of_journeys' do
-        let (:station) { double :station }
+        let (:station_entry) { double :entry_station }
+        let (:station_exit) { double :exit_station }
+        
         it '#list_of_journeys is empty upon card creation ' do
-          expect(subject.list_of_journeys).to be_empty
+          expect(subject.list_of_journeys).to eq []
         end
 
         it 'Stores the history of a journey' do
           subject.top_up(50)
-          subject.touch_in(station)
-          subject.touch_out(station)
-          expect(subject.list_of_journeys).to eq ([{station => station}])
+          subject.touch_in(station_entry)
+          subject.touch_out(station_exit)
+          expect(subject.add_journey).to eq ([{entry_station: station_entry, exit_station: station_exit }])
         end
       end
 
