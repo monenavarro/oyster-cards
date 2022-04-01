@@ -4,8 +4,8 @@ require 'journey'
 describe JourneyLog do
   let(:entry_station_jl) {double 'entry station for journey log'}
   let(:exit_station_jl) {double 'exit station for journey log'}
-  context '#initlaising_class' do
-    it 'is initalised with Journey class item ' do
+  context '#initialising_class' do
+    it 'is initialised with Journey class item ' do
       journey = Journey.new 
      expect(subject.journey_class).to be_an_instance_of Journey
     end    

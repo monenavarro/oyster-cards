@@ -2,21 +2,21 @@ require_relative '../lib/Oystercard.rb'
 
 describe Oystercard do
 
-  it "has a balance when created" do
+  it 'has a balance when created' do
     expect(subject.balance).to eq 0
   end
 
-  it "can have the balance topped up" do
+  it 'can have the balance topped up' do
     expect(subject.top_up(5)).to eq "Your balance is £5"
   end
 
-  it "raises an error if max balance exceeded" do
+  it 'raises an error if max balance exceeded' do
     max_balance = Oystercard::MAX_BALANCE
     subject.top_up(max_balance)
     expect{ subject.top_up (1) }.to raise_error "Max balance reached!"
   end
 
-   describe "#touch_in" do
+   describe '#touch_in' do
    let(:station) {double :station}
      it 'should be able to touch in' do
      subject.top_up(5)
@@ -24,11 +24,11 @@ describe Oystercard do
      expect(subject).to be_in_journey
      end
 
-     it "raise error if card has insufficient funds" do
+     it 'raise error if card has insufficient funds' do
       expect{subject.touch_in(station)}.to raise_error "Insufficient funds to touch in"
      end
 
-     it "logs entry station history" do
+     it 'logs entry station history' do
       subject.top_up(5)
       subject.touch_in(station)
       expect(subject).to have_attributes(:entry_station => station)
@@ -37,7 +37,7 @@ describe Oystercard do
     end
 
      
-     describe "#touch_out" do
+     describe '#touch_out' do
      let(:station) {double :station}
       it 'should be able to touch out' do
       subject.top_up(5)
@@ -52,7 +52,7 @@ describe Oystercard do
         expect{ subject.touch_out(station) }.to change {subject.balance}.by (-1)
       end
 
-      it "logs exit station history" do
+      it 'logs exit station history' do
         subject.top_up(5)
         subject.touch_in(station)
         subject.touch_out(station)
@@ -60,7 +60,7 @@ describe Oystercard do
       end
     end
 
-      describe "#in_a_journey" do
+      describe '#in_a_journey' do
       it 'is initially not in a journey' do
       expect(subject).not_to be_in_journey
       end

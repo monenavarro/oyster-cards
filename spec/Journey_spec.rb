@@ -6,7 +6,7 @@ describe Journey do
   let(:exit_station) {double "exit station"}
   
   
-  it "starts a journey" do
+  it 'starts a journey' do
   journey = Journey.new(station)
   expect(journey.entry_station).to eq station
   end

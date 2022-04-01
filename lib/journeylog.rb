@@ -10,8 +10,8 @@ class JourneyLog
     end
     
     def start_journey(station)
-        @entry_station = station
-        @exit_station = nil 
+      @entry_station = station
+      @exit_station = nil 
     end
 
     def finish(station)
