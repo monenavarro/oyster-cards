@@ -17,4 +17,15 @@ describe JourneyLog do
       expect(journey_log.entry_station).to eq entry_station_jl
     end
   end
+
+    it 'returns an incomplete journey' do
+      journey_log = JourneyLog.new(journey_class = Journey.new(entry_station_jl))
+      expect(journey_log.current_journey).to eq journey_class
+    end
+
+    it 'should add an exit station to current_journey' do
+      journey_log = JourneyLog.new(journey_class = Journey.new(entry_station_jl))
+      journey_log.finish(exit_station_jl)
+      expect(journey_log.exit_station).to eq exit_station_jl
+    end
 end
